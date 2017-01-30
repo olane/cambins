@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Promise = require("promise");
 var request = require("request");
 var $ = require("cheerio");
+var moment = require("moment");
 
 var url = "https://raw.github.com/mikeal/request/master/package.json";
 
@@ -49,11 +50,14 @@ function scrapeBins (streetAddress, postcode){
 			var div = $(item);
 
 			var binColourText = getTextOfNode(div);
-			var dateText = _.replace(div.find('b').html(), '<br>', ' ');
 			
+			var dateText = _.replace(div.find('b').html(), '<br>', ' ');
+			var parsedDate = moment(dateText, 'dddd D MMMM');
+
 			return {
 				binColourText: binColourText,
-				dateText: dateText
+				dateText: dateText,
+				date: parsedDate.toDate()
 			};
     	});
 
