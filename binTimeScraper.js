@@ -37,10 +37,19 @@ function getTextOfNode(node){
 	    return this.type === 'text';
 	}).text();
 }
+var baseUrl = 'http://bins.cambridge.gov.uk/bins.php?';
 
-function scrapeBins (streetAddress, postcode){
-	var url = 'http://bins.cambridge.gov.uk/bins.php?address=' + encodeURIComponent(streetAddress) + '&postcode=' + encodeURIComponent(postcode);
+function scrapeBinsFromUprn (uprn) {
+	var url = baseUrl + 'uprn=' + encodeURIComponent(uprn);
+	return scrapeBins(url);
+}
 
+function scrapeBinsFromAddress (streetAddress, postcode) {
+	var url = baseUrl + 'address=' + encodeURIComponent(streetAddress) + '&postcode=' + encodeURIComponent(postcode);
+	return scrapeBins(url);
+}
+
+function scrapeBins (url) {
 	return getPage(url).then(function (data) {
 		let parsed = $.load(data);
 
@@ -50,7 +59,7 @@ function scrapeBins (streetAddress, postcode){
 			var div = $(item);
 
 			var binColourText = getTextOfNode(div);
-			
+
 			var dateText = _.replace(div.find('b').html(), '<br>', ' ');
 			var parsedDate = moment(dateText, 'dddd D MMMM');
 
@@ -65,6 +74,6 @@ function scrapeBins (streetAddress, postcode){
 	});
 }
 
-scrapeBins('109 Gwydir St', 'CB1 2LG').then(function(data){
+scrapeBinsFromAddress('16', 'CB2 8DP').then(function(data){
 	console.log(data);
 });
