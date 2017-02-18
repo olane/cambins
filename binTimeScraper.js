@@ -5,6 +5,7 @@ var Promise = require("promise");
 var request = require("request");
 var $ = require("cheerio");
 var moment = require("moment");
+var ical = require("ical.js");
 
 var url = "https://raw.github.com/mikeal/request/master/package.json";
 
@@ -23,21 +24,7 @@ function getPage(url) {
     });
 }
 
-/*
-Takes:
-<div>
-	foo
-	<p>bar</p>
-</div>
-
-Returns 'foo'
-*/
-function getTextOfNode(node){
-	return node.contents().filter(function() {
-	    return this.type === 'text';
-	}).text();
-}
-var baseUrl = 'http://bins.cambridge.gov.uk/bins.php?';
+var baseUrl = 'http://www.cambridge.gov.uk/binfeed.ical?';
 
 function scrapeBinsFromUprn (uprn) {
 	var url = baseUrl + 'uprn=' + encodeURIComponent(uprn);
@@ -49,31 +36,36 @@ function scrapeBinsFromAddress (streetAddress, postcode) {
 	return scrapeBins(url);
 }
 
-function scrapeBins (url) {
-	return getPage(url).then(function (data) {
-		let parsed = $.load(data);
-
-		var elements = parsed("#bins-text-wrapper").prev().children().find('div');
-
-		var parsedObjects = _.map(elements.toArray(), function(item){
-			var div = $(item);
-
-			var binColourText = getTextOfNode(div);
-
-			var dateText = _.replace(div.find('b').html(), '<br>', ' ');
-			var parsedDate = moment(dateText, 'dddd D MMMM');
-
-			return {
-				binColourText: binColourText,
-				dateText: dateText,
-				date: parsedDate.toDate()
-			};
-    	});
-
-	    return parsedObjects;
+var binTypeNames = ["black", "green", "blue"];
+function getBinTypesFromSummary (summaryText) {
+	return _.filter(binTypeNames, function(binTypeName){
+		return _.includes(_.lowerCase(summaryText), binTypeName);
 	});
 }
 
-scrapeBinsFromAddress('16', 'CB2 8DP').then(function(data){
+function isRescheduled (summaryText) {
+	return _.includes(_.lowerCase(summaryText), "rescheduled");
+}
+
+function scrapeBins (url) {
+	return getPage(url).then(function (data) {
+		let jcal = ical.parse(data);
+		let component = new ical.Component(jcal);
+		let events = _.map(component.getAllSubcomponents("vevent"), function(x){
+			return new ical.Event(x);
+		});
+
+		return _.map(events, function(x){
+			return {
+				summary: x.summary,
+				date: x.startDate,
+				binTypes: getBinTypesFromSummary(x.summary),
+				isRescheduled: isRescheduled(x.summary)
+			}
+		});
+	});
+}
+
+scrapeBinsFromUprn('200004177341').then(function(data){
 	console.log(data);
 });
