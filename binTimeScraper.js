@@ -6,8 +6,6 @@ var request = require("request");
 var moment = require("moment");
 var ical = require("ical.js");
 
-var url = "https://raw.github.com/mikeal/request/master/package.json";
-
 function getPage(url) {
     return new Promise(function (resolve, reject) {
         request({url:url}, function (err, res, body) {
