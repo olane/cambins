@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var Promise = require("promise");
 var request = require("request");
-var $ = require("cheerio");
 var moment = require("moment");
 var ical = require("ical.js");
 
@@ -58,7 +57,7 @@ function scrapeBins (url) {
 		return _.map(events, function(x){
 			return {
 				summary: x.summary,
-				date: x.startDate,
+				date: moment(x.startDate.toJSDate()),
 				binTypes: getBinTypesFromSummary(x.summary),
 				isRescheduled: isRescheduled(x.summary)
 			}
