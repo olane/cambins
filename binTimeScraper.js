@@ -65,6 +65,22 @@ function scrapeBins (url) {
 	});
 }
 
-scrapeBinsFromUprn('200004177341').then(function(data){
-	console.log(data);
-});
+function orderByDate(list){
+	return _.sortBy(list, x => x.date.valueOf());
+}
+
+function filterFutureOnly(list){
+	// Filter anything earlier than midnight last night (it might be the day of the collection)
+	return _.filter(list, x => x.date.isAfter(moment().startOf('day')))
+}
+
+function log(list){
+	console.log(list);
+	return list;
+}
+
+scrapeBinsFromUprn('200004177341')
+	.then(orderByDate)
+	.then(filterFutureOnly)
+	.then(log);
+
