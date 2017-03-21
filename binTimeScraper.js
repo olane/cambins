@@ -2,24 +2,9 @@
 
 var _ = require('lodash');
 var Promise = require("promise");
-var request = require("request");
 var moment = require("moment");
 var ical = require("ical.js");
-
-function getPage(url) {
-    return new Promise(function (resolve, reject) {
-        request({url:url}, function (err, res, body) {
-            if (err) {
-                return reject(err);
-            } else if (res.statusCode !== 200) {
-                err = new Error("Unexpected status code: " + res.statusCode);
-                err.res = res;
-                return reject(err);
-            }
-            resolve(body);
-        });
-    });
-}
+var pageGetter = require("./pageGetter");
 
 var baseUrl = 'http://www.cambridge.gov.uk/binfeed.ical?';
 
@@ -40,7 +25,7 @@ function isRescheduled (summaryText) {
 }
 
 function scrapeBins (url) {
-	return getPage(url).then(function (data) {
+	return pageGetter.getPage(url).then(function (data) {
 		let jcal = ical.parse(data);
 		let component = new ical.Component(jcal);
 		let events = _.map(component.getAllSubcomponents("vevent"), function(x){
