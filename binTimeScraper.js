@@ -28,11 +28,6 @@ function scrapeBinsFromUprn (uprn) {
 	return scrapeBins(url);
 }
 
-function scrapeBinsFromAddress (streetAddress, postcode) {
-	var url = baseUrl + 'address=' + encodeURIComponent(streetAddress) + '&postcode=' + encodeURIComponent(postcode);
-	return scrapeBins(url);
-}
-
 var binTypeNames = ["black", "green", "blue"];
 function getBinTypesFromSummary (summaryText) {
 	return _.filter(binTypeNames, function(binTypeName){
@@ -72,13 +67,12 @@ function filterFutureOnly(list){
 	return _.filter(list, x => x.date.isAfter(moment().startOf('day')))
 }
 
-function log(list){
-	console.log(list);
-	return list;
+function getUpcomingBinsFromUprn(uprn){
+	return scrapeBinsFromUprn(uprn)
+		.then(orderByDate)
+		.then(filterFutureOnly);
 }
 
-scrapeBinsFromUprn('200004177341')
-	.then(orderByDate)
-	.then(filterFutureOnly)
-	.then(log);
-
+module.exports = {
+	getUpcomingBinsFromUprn: getUpcomingBinsFromUprn
+}

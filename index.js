@@ -2,4 +2,4 @@
 
 var binScraper = require('./binTimeScraper');
 
-binScraper.getBinTime();
+binScraper.getUpcomingBinsFromUprn('200004177341').then(console.log);
