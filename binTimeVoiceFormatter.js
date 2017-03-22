@@ -13,9 +13,9 @@ var calendarFormats = {
 };
 
 var formatBinEntry = function(binEntry){
-	date = binEntry.date;
-	binTypes = binEntry.binTypes;
-	isRescheduled = binEntry.isRescheduled;
+	var date = binEntry.date;
+	var binTypes = binEntry.binTypes;
+	var isRescheduled = binEntry.isRescheduled;
 
 	var result = "The ";
 	result += _.join(binTypes, " and ");
@@ -28,7 +28,7 @@ var formatBinEntry = function(binEntry){
 	}
 
 	return result;
-};
+}; 
 
 module.exports = {
 	formatBinEntry: formatBinEntry
