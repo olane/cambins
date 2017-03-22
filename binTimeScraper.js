@@ -52,12 +52,22 @@ function filterFutureOnly(list){
 	return _.filter(list, x => x.date.isAfter(moment().startOf('day')))
 }
 
+function getNext(list){
+	return filterFutureOnly(orderByDate(list))[0];
+}
+
 function getUpcomingBinsFromUprn(uprn){
 	return scrapeBinsFromUprn(uprn)
 		.then(orderByDate)
 		.then(filterFutureOnly);
 }
 
+function getNextBinsFromUprn(uprn){
+	return scrapeBinsFromUprn(uprn)
+		.then(getNext);
+}
+
 module.exports = {
-	getUpcomingBinsFromUprn: getUpcomingBinsFromUprn
+	getUpcomingBinsFromUprn: getUpcomingBinsFromUprn,
+	getNextBinsFromUprn: getNextBinsFromUprn
 }
