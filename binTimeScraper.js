@@ -6,7 +6,7 @@ var moment = require("moment");
 var ical = require("ical.js");
 var pageGetter = require("./pageGetter");
 
-var baseUrl = 'http://www.cambridge.gov.uk/binfeed.ical?';
+var baseUrl = 'https://www.cambridge.gov.uk/binfeed.ical?';
 
 function scrapeBinsFromUprn (uprn) {
 	var url = baseUrl + 'uprn=' + encodeURIComponent(uprn);
