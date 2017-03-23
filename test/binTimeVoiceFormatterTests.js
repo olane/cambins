@@ -87,5 +87,16 @@ describe('binTimeVoiceFormatter', function() {
 			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Wednesday 17th May.');
 			done();
 		});
+
+		it('formats a black bin collection on a day next year correctly', function(done){
+			var binTime = {
+				date: moment().add(10, 'months'),
+				binTypes: ['black'],
+				isRescheduled: false
+			};
+
+			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Thursday 8th February.');
+			done();
+		});
 	});
 });
