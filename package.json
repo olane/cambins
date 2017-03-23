@@ -4,6 +4,11 @@
   "description": "",
   "main": "index.js",
   "author": "Oli Lane",
+  "repository": "https://github.com/olane/cambins",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "alexa-sdk": "^1.0.7",
     "ical.js": "^1.2.2",
@@ -11,5 +16,11 @@
     "moment": "^2.17.1",
     "promise": "^7.1.1",
     "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "proxyquire": "^1.7.11",
+    "sinon": "^2.1.0"
   }
 }
