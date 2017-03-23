@@ -24,7 +24,7 @@ var formatBinEntry = function(binEntry){
 	result += ".";
 
 	if(isRescheduled){
-		result += "This is a rescheduled collection.";
+		result += " This is a rescheduled collection.";
 	}
 
 	return result;
