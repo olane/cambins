@@ -7,6 +7,7 @@ var sinon = require('sinon');
 var proxyquire = require('proxyquire');
 var fs = require('fs');
 var _ = require('lodash');
+var moment = require('moment');
 
 var pageGetter = require('../pageGetter');
 
@@ -19,23 +20,29 @@ var icalResponsePromise = new Promise(function(resolve, reject){
 	});
 });
 
+var currentTime = new Date('2017-04-08T01:10:00');
+
 describe('binTimeScraper', function() {
 	var binTimeScraper;
+	var clock;
 
 	before(function () {
 		var getPageStub = sinon.stub(pageGetter, 'getPage');
 		binTimeScraper = proxyquire('../binTimeScraper', { pageGetter: { getPage: getPageStub } } );
 
 		getPageStub.withArgs('https://www.cambridge.gov.uk/binfeed.ical?uprn=0000000').returns(icalResponsePromise);
+
+		clock = sinon.useFakeTimers(currentTime);
 	})
 
 	after(function () {
 		pageGetter.getPage.restore();
+		clock.restore();
 	});
 
-	it('parses the correct number of bin times', function(done) {
+	it('parses and returns all the future bin times', function(done) {
 	 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
-	 		expect(response.length).to.be.equal(24);
+	 		expect(response.length).to.be.equal(22);
 	 		done();
 	 	}).catch(function(err){done(err)});
 	});
@@ -89,6 +96,16 @@ describe('binTimeScraper', function() {
 	 		});
 
 			expect(foundRescheduledTimes, 'found rescheduled times').to.be.equal(true);
+			done();
+	 	}).catch(function(err){done(err)});
+	});
+
+	it('returns a next bin time in the future', function(done) {
+	 	binTimeScraper.getNextBinsFromUprn('0000000').then(function(response){
+	 		var now = moment(currentTime);
+
+			expect(response.date.isAfter(now), 'next bin time is after now').to.be.equal(true);
+
 			done();
 	 	}).catch(function(err){done(err)});
 	});
