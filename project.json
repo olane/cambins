@@ -1,0 +1,8 @@
+{
+  "name": "alexa",
+  "description": "An Alexa app for retrieving Cambridge bin times",
+  "runtime": "nodejs6.10",
+  "memory": 128,
+  "timeout": 5,
+  "role": "arn:aws:iam::268519587967:role/alexa-cambins"
+}
