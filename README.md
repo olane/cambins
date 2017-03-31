@@ -9,7 +9,11 @@ Install github.com/apex/apex
 
 `aws configure`
 
-### To deploy:
+### To deploy to Lambda:
 `cd functions/cambins && npm install && cd ../..`
 
 `apex deploy`
+
+### Alexa setup utterances and intents
+
+These are in `/alexa`
