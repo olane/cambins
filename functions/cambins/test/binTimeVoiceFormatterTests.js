@@ -73,7 +73,7 @@ describe('binTimeVoiceFormatter', function() {
 				isRescheduled: false
 			};
 
-			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Saturday 22nd April.');
+			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Saturday the 22nd of April.');
 			done();
 		});
 
@@ -84,7 +84,7 @@ describe('binTimeVoiceFormatter', function() {
 				isRescheduled: false
 			};
 
-			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Wednesday 17th May.');
+			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Wednesday the 17th of May.');
 			done();
 		});
 
@@ -95,7 +95,7 @@ describe('binTimeVoiceFormatter', function() {
 				isRescheduled: false
 			};
 
-			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Thursday 8th February.');
+			expect(voiceFormatter.formatBinEntry(binTime)).to.be.equal('The black bins will be collected on Thursday the 8th of February.');
 			done();
 		});
 	});

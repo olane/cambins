@@ -9,7 +9,7 @@ var calendarFormats = {
     nextDay : '[tomorrow]',
     lastWeek : '[last] dddd',
     nextWeek : '[on] dddd',
-    sameElse : '[on] dddd Do MMMM'
+    sameElse : '[on] dddd [the] Do [of] MMMM'
 };
 
 var formatBinEntry = function(binEntry){
