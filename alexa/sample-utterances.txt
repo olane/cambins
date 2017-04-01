@@ -29,3 +29,5 @@ NextBinTimeIntent which bin is being collected this week
 NextBinTimeIntent which colour bin is being collected this week
 NextBinTimeIntent when the bins will be collected next
 NextBinTimeIntent when the bins will next be collected
+NextBinTimeIntent when they will be collected
+NextBinTimeIntent when they will be picked up
