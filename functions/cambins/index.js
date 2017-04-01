@@ -38,6 +38,9 @@ var handlers = {
         binScraper.getNextBinsFromUprnForType('200004177341', type)
             .then(voiceFormatter.formatBinEntry)
             .then(emitTell.bind(this));
+    },
+    'Unhandled': function() {
+        this.emit(':tell', 'Sorry, I didn\'t get that. Try asking Cambridge Bins when the bins will be collected.');
     }
 };
 
