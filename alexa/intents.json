@@ -4,6 +4,15 @@
       "intent": "NextBinTimeIntent"
     },
     {
+      "intent": "NextBinTimeForTypeIntent",
+      "slots":[
+        {
+          "name": "BinType",
+          "type": "LIST_OF_BIN_TYPES"
+        }
+      ]
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     },
     {

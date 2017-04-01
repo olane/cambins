@@ -31,3 +31,30 @@ NextBinTimeIntent when the bins will be collected next
 NextBinTimeIntent when the bins will next be collected
 NextBinTimeIntent when they will be collected
 NextBinTimeIntent when they will be picked up
+
+NextBinTimeForTypeIntent when the next collection is for the {BinType} bins
+NextBinTimeForTypeIntent when the next {BinType} bin collection is
+NextBinTimeForTypeIntent when the next {BinType} collection will be
+NextBinTimeForTypeIntent when the {BinType} bins will be collected
+NextBinTimeForTypeIntent when the {BinType} bins will be picked up
+NextBinTimeForTypeIntent when our {BinType} bins will be collected
+NextBinTimeForTypeIntent when the {BinType} bin will be collected
+NextBinTimeForTypeIntent when the {BinType} bin will be picked up
+NextBinTimeForTypeIntent when our {BinType} bin will be collected
+NextBinTimeForTypeIntent when the next {BinType} bin collection is
+NextBinTimeForTypeIntent when the next collection is for the {BinType} bins
+NextBinTimeForTypeIntent what day the {BinType} bins will be collected
+NextBinTimeForTypeIntent what day the {BinType} bins will be picked up
+NextBinTimeForTypeIntent what day next {BinType} bin collection is
+NextBinTimeForTypeIntent what day {BinType} bins will be collected
+NextBinTimeForTypeIntent what day {BinType} bins will be picked up
+NextBinTimeForTypeIntent what date {BinType} bins will be collected
+NextBinTimeForTypeIntent what date {BinType} bin will be collected
+NextBinTimeForTypeIntent what date {BinType} bin will be picked up
+NextBinTimeForTypeIntent when our {BinType} bin will be collected
+NextBinTimeForTypeIntent what date next {BinType} bin collection is
+NextBinTimeForTypeIntent what date next collection is for the {BinType} bins
+NextBinTimeForTypeIntent when the {BinType} bins will be collected next
+NextBinTimeForTypeIntent when the {BinType} bins will next be collected
+NextBinTimeForTypeIntent about the {BinType} bins
+NextBinTimeForTypeIntent for the {BinType} bins
