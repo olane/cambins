@@ -53,7 +53,17 @@ function filterFutureOnly(list){
 }
 
 function getNext(list){
-	return filterFutureOnly(orderByDate(list))[0];
+	var futureOnly = filterFutureOnly(orderByDate(list));
+
+	if(futureOnly.length === 0) {
+		throw new Error("No collections found in the future");
+	}
+
+	return futureOnly[0];
+}
+
+function filterType(type, list) {
+	return _.filter(list, x => _.includes(x.binTypes, type));
 }
 
 function getUpcomingBinsFromUprn(uprn){
@@ -67,7 +77,14 @@ function getNextBinsFromUprn(uprn){
 		.then(getNext);
 }
 
+function getNextBinsFromUprnForType(uprn, type){
+	return scrapeBinsFromUprn(uprn)
+		.then(filterType.bind(null, type))
+		.then(getNext);
+}
+
 module.exports = {
 	getUpcomingBinsFromUprn: getUpcomingBinsFromUprn,
-	getNextBinsFromUprn: getNextBinsFromUprn
+	getNextBinsFromUprn: getNextBinsFromUprn,
+	getNextBinsFromUprnForType: getNextBinsFromUprnForType
 }

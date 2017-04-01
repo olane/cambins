@@ -40,73 +40,93 @@ describe('binTimeScraper', function() {
 		clock.restore();
 	});
 
-	it('parses and returns all the future bin times', function(done) {
-	 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
-	 		expect(response.length).to.be.equal(22);
-	 		done();
-	 	}).catch(function(err){done(err)});
+
+	describe('getting upcoming collections', function() {
+		it('parses and returns all the future bin times', function(done) {
+		 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
+		 		expect(response.length).to.be.equal(22);
+		 		done();
+		 	}).catch(function(err){done(err)});
+		});
+
+		it('returns parsed bin times in time order', function(done) {
+		 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
+		 		var lastDate;
+
+		 		_.each(response, function(x){
+		 			if(lastDate){
+		 				var assertionMessage = lastDate.format() + ' is before ' + x.date.format();
+		 				expect(lastDate.isBefore(x.date), assertionMessage).to.be.equal(true);
+		 			}
+	 				lastDate = x.date;
+		 		});
+
+		 		done();
+		 	}).catch(function(err){done(err)});
+		});
+
+		it('returns some of all bin types', function(done) {
+		 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
+		 		var seenBinTypes = {
+		 			'blue' : false,
+		 			'green': false,
+		 			'black': false
+		 		};
+
+		 		_.each(response, function(x){
+		 			_.each(x.binTypes, function(binType){
+	 					seenBinTypes[binType] = true;
+		 			});
+		 		});
+
+		 		_.forOwn(seenBinTypes, function(value, key){
+		 			expect(value, 'Seen ' + key).to.be.equal(true);
+		 		})
+
+		 		done();
+		 	}).catch(function(err){done(err)});
+		});
+
+		it('finds at least one rescheduled time', function(done) {
+		 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
+		 		var foundRescheduledTimes = false;
+
+		 		_.each(response, function(x){
+		 			if(x.isRescheduled){
+		 				foundRescheduledTimes = true;
+		 			}
+		 		});
+
+				expect(foundRescheduledTimes, 'found rescheduled times').to.be.equal(true);
+				done();
+		 	}).catch(function(err){done(err)});
+		});
 	});
 
-	it('returns parsed bin times in time order', function(done) {
-	 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
-	 		var lastDate;
+	describe('getting next collection', function() {
+		it('returns a next bin time in the future', function(done) {
+		 	binTimeScraper.getNextBinsFromUprn('0000000').then(function(response){
+		 		var now = moment(currentTime);
 
-	 		_.each(response, function(x){
-	 			if(lastDate){
-	 				var assertionMessage = lastDate.format() + ' is before ' + x.date.format();
-	 				expect(lastDate.isBefore(x.date), assertionMessage).to.be.equal(true);
-	 			}
- 				lastDate = x.date;
-	 		});
+				expect(response.date.isAfter(now), 'next bin time is after now').to.be.equal(true);
 
-	 		done();
-	 	}).catch(function(err){done(err)});
+				done();
+		 	}).catch(function(err){done(err)});
+		});
 	});
 
-	it('returns some of all bin types', function(done) {
-	 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
-	 		var seenBinTypes = {
-	 			'blue' : false,
-	 			'green': false,
-	 			'black': false
-	 		};
+	describe('getting next collection for type', function() {
+		_.each(['green', 'blue', 'black'], function(type){
+			it('returns a next ' + type + ' bin in the future', function(done) {
+			 	binTimeScraper.getNextBinsFromUprnForType('0000000', type).then(function(response){
+			 		var now = moment(currentTime);
 
-	 		_.each(response, function(x){
-	 			_.each(x.binTypes, function(binType){
- 					seenBinTypes[binType] = true;
-	 			});
-	 		});
+					expect(response.date.isAfter(now), 'next bin time is after now').to.be.equal(true);
+					expect(_.includes(response.binTypes, type), 'next '+type+' bin type has '+type+' bins in it').to.be.equal(true);
 
-	 		_.forOwn(seenBinTypes, function(value, key){
-	 			expect(value, 'Seen ' + key).to.be.equal(true);
-	 		})
-
-	 		done();
-	 	}).catch(function(err){done(err)});
-	});
-
-	it('finds at least one rescheduled time', function(done) {
-	 	binTimeScraper.getUpcomingBinsFromUprn('0000000').then(function(response){
-	 		var foundRescheduledTimes = false;
-
-	 		_.each(response, function(x){
-	 			if(x.isRescheduled){
-	 				foundRescheduledTimes = true;
-	 			}
-	 		});
-
-			expect(foundRescheduledTimes, 'found rescheduled times').to.be.equal(true);
-			done();
-	 	}).catch(function(err){done(err)});
-	});
-
-	it('returns a next bin time in the future', function(done) {
-	 	binTimeScraper.getNextBinsFromUprn('0000000').then(function(response){
-	 		var now = moment(currentTime);
-
-			expect(response.date.isAfter(now), 'next bin time is after now').to.be.equal(true);
-
-			done();
-	 	}).catch(function(err){done(err)});
+					done();
+			 	}).catch(function(err){done(err)});
+			});
+		});
 	});
 });
