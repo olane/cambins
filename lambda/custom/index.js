@@ -49,8 +49,7 @@ const GetNextBinTimeForTypeHandler = {
     return false;
   },
   handle(handlerInput) {
-
-    var type = this.event.request.intent.slots.BinType.value;
+    var type = handlerInput.requestEnvelope.request.intent.slots.BinType.value;
 
     if(!_.includes(binTypes, type)){
         const response = "Sorry, I didn't recognise the bin type " + type;
