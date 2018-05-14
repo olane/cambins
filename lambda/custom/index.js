@@ -8,7 +8,6 @@ var voiceFormatter = require('./binTimeVoiceFormatter');
 const Alexa = require('ask-sdk');
 var _ = require('lodash');
 
-const APP_ID = 'amzn1.ask.skill.6ef2339c-d9b3-4ad5-9100-1f62a4a2f98e';
 const binTypes = ['green', 'blue', 'black'];
 
 const GetNextBinTimeHandler = {
