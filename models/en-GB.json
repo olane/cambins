@@ -1,0 +1,119 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "cambridge bins",
+            "intents": [
+                {
+                    "name": "NextBinTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "when the next collection is",
+                        "when the next bin collection is",
+                        "when the next collection will be",
+                        "when the bins will be collected",
+                        "when the bins will be picked up",
+                        "when our bins will be collected",
+                        "when the bin will be collected",
+                        "when the bin will be picked up",
+                        "when our bin will be collected",
+                        "when the next bin collection is",
+                        "when the next collection is for the bins",
+                        "when the bin men are coming",
+                        "what day the bins will be collected",
+                        "what day the bins will be picked up",
+                        "what day the bin men are coming",
+                        "what day next bin collection is",
+                        "what day next collection will be",
+                        "what day bins will be collected",
+                        "what day bins will be picked up",
+                        "what date bins will be collected",
+                        "what date bin will be collected",
+                        "what date bin will be picked up",
+                        "when our bin will be collected",
+                        "what date next bin collection is",
+                        "what date next collection is for the bins",
+                        "what date bin men are coming",
+                        "which bins are being collected this week",
+                        "which bin is being collected this week",
+                        "which colour bin is being collected this week",
+                        "when the bins will be collected next",
+                        "when the bins will next be collected",
+                        "when they will be collected",
+                        "when they will be picked up"
+                    ]
+                },
+                {
+                    "name": "NextBinTimeForTypeIntent",
+                    "slots": [
+                        {
+                            "name": "BinType",
+                            "type": "LIST_OF_BIN_TYPES"
+                        }
+                    ],
+                    "samples": [
+                        "when the next collection is for the {BinType} bins",
+                        "when the next {BinType} bin collection is",
+                        "when the next {BinType} collection will be",
+                        "when the {BinType} bins will be collected",
+                        "when the {BinType} bins will be picked up",
+                        "when our {BinType} bins will be collected",
+                        "when the {BinType} bin will be collected",
+                        "when the {BinType} bin will be picked up",
+                        "when our {BinType} bin will be collected",
+                        "when the next {BinType} bin collection is",
+                        "when the next collection is for the {BinType} bins",
+                        "what day the {BinType} bins will be collected",
+                        "what day the {BinType} bins will be picked up",Í
+                        "what day next {BinType} bin collection is",
+                        "what day {BinType} bins will be collected",
+                        "what day {BinType} bins will be picked up",
+                        "what date {BinType} bins will be collected",
+                        "what date {BinType} bin will be collected",
+                        "what date {BinType} bin will be picked up",
+                        "when our {BinType} bin will be collected",
+                        "what date next {BinType} bin collection is",
+                        "what date next collection is for the {BinType} bins",
+                        "when the {BinType} bins will be collected next",
+                        "when the {BinType} bins will next be collected",
+                        "about the {BinType} bins",
+                        "for the {BinType} bins"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                }
+            ],
+            "types": [
+                {
+                    "name": "LIST_OF_BIN_TYPES",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "blue"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "green"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "black"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
