@@ -80,6 +80,34 @@
                     ]
                 },
                 {
+                    "name": "SetUprnIntent",
+                    "samples": [
+                        "to set my U.P.R.N",
+                        "set my U.P.R.N",
+                        "my U.P.R.N",
+                        "to set up my U.P.R.N",
+                        "setup",
+                        "set up",
+                        "settings"
+                    ]
+                },
+                {
+                    "name": "UprnIntent", 
+                    "slots": [
+                        {
+                        "name": "number",
+                        "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{number}",
+                        "set it to {number}",
+                        "it's {number}",
+                        "my U.P.R.N. is {number}",
+                        "set my U.P.R.N. to {number}"
+                    ]
+                },
+                {
                     "name": "AMAZON.HelpIntent",
                     "samples": []
                 },
