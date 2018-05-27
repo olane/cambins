@@ -28,8 +28,8 @@ const GetNextBinTimeHandler = {
         .then(voiceFormatter.formatBinEntry)
         .then(response => {
           return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+          .speak(response)
+          .reprompt(response)
             .getResponse();
         });
   },
