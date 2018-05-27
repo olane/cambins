@@ -13,3 +13,5 @@ If you haven't used the ASK CLI yet:
 `cd lambda/custom && npm install && cd ../..`
 
 `ask deploy`
+
+At this point you will probably need to give the skill's IAM role access to create/read/update DynamoDB tables.
