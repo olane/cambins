@@ -39,7 +39,6 @@ const GetNextBinTimeHandler = {
           .then(response => {
             return handlerInput.responseBuilder
               .speak(response)
-              .reprompt(response)
               .getResponse();
           });
         //return binScraper.getNextBinsFromUprn('200004177341');
@@ -82,7 +81,6 @@ const GetNextBinTimeForTypeHandler = {
           .then(response => {
             return handlerInput.responseBuilder
               .speak(response)
-              .reprompt(response)
               .getResponse();
           });
         //return binScraper.getNextBinsFromUprn('200004177341', type);
@@ -135,7 +133,6 @@ const HelpIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)
       .getResponse();
   },
 };
@@ -149,7 +146,6 @@ const ErrorHandler = {
 
     return handlerInput.responseBuilder
       .speak('Sorry, I can\'t understand the command. Try asking Cambridge Bins when the bins will be collected. ' + error.message)
-      .reprompt('Sorry, I can\'t understand the command. Try asking Cambridge Bins when the bins will be collected.')
       .getResponse();
   },
 };
