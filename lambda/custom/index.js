@@ -55,7 +55,7 @@ const GetNextBinTimeForTypeHandler = {
         const response = "Sorry, I didn't recognise the bin type " + type;
 
         return handlerInput.responseBuilder
-          .speak(speechText)
+          .speak(response)
           .getResponse();
     }
     
@@ -63,8 +63,8 @@ const GetNextBinTimeForTypeHandler = {
         .then(voiceFormatter.formatBinEntry)
         .then(response => {
           return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+          .speak(response)
+          .reprompt(response)
             .getResponse();
         });
   },
