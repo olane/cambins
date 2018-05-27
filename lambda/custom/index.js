@@ -10,6 +10,10 @@ const _ = require('lodash');
 
 const binTypes = ['green', 'blue', 'black'];
 
+function getNoUprnError(handlerInput) {
+  return handlerInput.responseBuilder.speak('You need to set your UPRN before you can do this.').getResponse();
+}
+
 const GetNextBinTimeHandler = {
   canHandle(handlerInput) {
     const requestType = handlerInput.requestEnvelope.request.type;
@@ -26,16 +30,19 @@ const GetNextBinTimeHandler = {
   handle(handlerInput) {
     return handlerInput.attributesManager.getPersistentAttributes()
       .then(attributes => {
-        //TODO check uprn has been set
-        return binScraper.getNextBinsFromUprn(attributes.uprn);
+        if(!attributes.uprn){
+          return getNoUprnError(handlerInput);
+        }
+
+        return binScraper.getNextBinsFromUprn(attributes.uprn)
+          .then(voiceFormatter.formatBinEntry)
+          .then(response => {
+            return handlerInput.responseBuilder
+              .speak(response)
+              .reprompt(response)
+              .getResponse();
+          });
         //return binScraper.getNextBinsFromUprn('200004177341');
-      })
-      .then(voiceFormatter.formatBinEntry)
-      .then(response => {
-        return handlerInput.responseBuilder
-          .speak(response)
-          .reprompt(response)
-          .getResponse();
       });
   },
 };
@@ -66,19 +73,26 @@ const GetNextBinTimeForTypeHandler = {
     
     return handlerInput.attributesManager.getPersistentAttributes()
       .then(attributes => {
-        //TODO check uprn has been set
-        return binScraper.getNextBinsFromUprn(attributes.uprn, type);
+        if(!attributes.uprn){
+          return getNoUprnError(handlerInput);
+        }
+
+        return binScraper.getNextBinsFromUprn(attributes.uprn, type)
+          .then(voiceFormatter.formatBinEntry)
+          .then(response => {
+            return handlerInput.responseBuilder
+              .speak(response)
+              .reprompt(response)
+              .getResponse();
+          });
         //return binScraper.getNextBinsFromUprn('200004177341', type);
-      })
-      .then(voiceFormatter.formatBinEntry)
-      .then(response => {
-        return handlerInput.responseBuilder
-          .speak(response)
-          .reprompt(response)
-          .getResponse();
       });
   },
 };
+
+function uprnIsValid(uprn) {
+  return uprn && Number.isInteger(Number(uprn)) && uprn.toString().length === 12;
+}
 
 const SetUprnHandler = {
   canHandle(handlerInput) {
@@ -94,7 +108,11 @@ const SetUprnHandler = {
     }
     
     let uprnInput = handlerInput.requestEnvelope.request.intent.slots.Uprn.value;
-    // TODO validate uprn
+
+    if(!uprnIsValid(uprnInput)) {
+      return handlerInput.responseBuilder.speak('Sorry - that doesn\'t seem like a valid UPRN. It should be a 12 digit number.').getResponse();
+    }
+
     return handlerInput.attributesManager.getPersistentAttributes()
       .then((attributes) => {
         attributes.uprn = uprnInput;
