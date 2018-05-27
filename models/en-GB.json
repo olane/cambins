@@ -80,6 +80,27 @@
                     ]
                 },
                 {
+                    "name": "SetUprnIntent",
+                    "slots": [
+                        {
+                            "name": "Uprn",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "My U.P.R.N. is {Uprn}",
+                                "It's {Uprn}",
+                                "Set it to {Uprn}",
+                                "{Uprn}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "set my UPRN to {Uprn}",
+                        "my UPRN is {Uprn}",
+                        "set {Uprn} as my UPRN",
+                        "set my UPRN"
+                    ]
+                },
+                {
                     "name": "AMAZON.HelpIntent",
                     "samples": []
                 },
@@ -114,6 +135,47 @@
                     ]
                 }
             ]
-        }
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SetUprnIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Uprn",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": true,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "confirmation": "Confirm.Slot.126246130758.296303107614",
+                                "elicitation": "Elicit.Slot.126246130758.296303107614"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Slot.126246130758.296303107614",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "That's {Uprn} , right?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.126246130758.296303107614",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What do you want to set your UPRN to?"
+                    }
+                ]
+            }
+        ]
     }
 }
