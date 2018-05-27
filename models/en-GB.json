@@ -162,8 +162,8 @@
                 "id": "Confirm.Slot.126246130758.296303107614",
                 "variations": [
                     {
-                        "type": "PlainText",
-                        "value": "That's {Uprn} , right?"
+                        "type": "SSML",
+                        "value": "<speak>That's <say-as interpret-as=\"digits\">{Uprn}</say-as> , right?</speak>"
                     }
                 ]
             },
