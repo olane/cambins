@@ -3,10 +3,10 @@
 
 'use strict';
 
-var binScraper = require('./binTimeScraper');
-var voiceFormatter = require('./binTimeVoiceFormatter');
+const binScraper = require('./binTimeScraper');
+const voiceFormatter = require('./binTimeVoiceFormatter');
 const Alexa = require('ask-sdk');
-var _ = require('lodash');
+const _ = require('lodash');
 
 const binTypes = ['green', 'blue', 'black'];
 
