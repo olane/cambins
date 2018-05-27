@@ -42,7 +42,7 @@ const GetNextBinTimeForTypeHandler = {
 
     if(requestType === 'LaunchRequest') return true;
 
-    if (requestType === 'IntentRequest' && intentName === 'NextBinTimeIntent') {
+    if (requestType === 'IntentRequest' && intentName === 'NextBinTimeForTypeIntent') {
         return true;
     }
     
